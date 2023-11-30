@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="assets/css/styles.css">
+        <script src="assets/js/jquery.min.js"></script>
+    </head>
+    <body class="main">
+    <input type="textbox" id="test"/>
+    <P onclick="ajaxresponse()">CLICK ME FOR AJAX REQUESTS</P>
+
+
+        <script>
+            //alert("test");
+         function ajaxresponse(){
+         const num1 = $('#test').val();   
+         $.ajax({url:'post.php',type:'post',data:'num1='+num1,success: function (result){
+            alert (result);}
+        });
+
+
+
+
+         }
+
+
+
+        </script>
+    </body>
+</html>

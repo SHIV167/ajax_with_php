@@ -1,0 +1,179 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="Description" content="Enter your description here"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<title>Art</title>
+</head>
+<body>
+    <!-- Navbar Section -->
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 fixed-top shadow-lg">
+        <div class="container">
+            <a href="#" class="navbar-brand">For the love of Art</a>
+            <button 
+                class="navbar-toggler" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#navmenu"
+            ><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="#126414" class="nav-link">Espejo Negro</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#137125" class="nav-link">Many Mansions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#117266" class="nav-link">Nightlife</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#191556" class="nav-link">The Room No. VI</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#102611" class="nav-link">Veranda Post</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#151363" class="nav-link">Weaving</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <!--Start of Container For Artwork-->
+    <div class="container">
+        <div class="gallery">
+            <br>
+            <figure class="gallery__item gallery__item--1" id="blackmirror" onclick="event.stopPropagation(); getArt(this.id, event)">
+                <img class="gallery__img shadow-lg" src="images/black-mirror.jpeg" alt="126414">
+            </figure>
+                <br>
+            <figure class="gallery__item gallery__item--2" id="manymansions" onclick="event.stopPropagation(); getArt(this.id, event)" >
+                <img class="gallery__img shadow-lg" src="/images/many-mansions.jpeg" alt="137125">
+            </figure>
+                <br>
+            <figure class="gallery__item gallery__item--3" id="nightlife" onclick="event.stopPropagation(); getArt(this.id, event)">
+                <img class="gallery__img shadow-lg" src="images/nightlife.jpeg" alt="117266">
+            </figure>
+                <br>
+            <figure class="gallery__item gallery__item--4" id="room" onclick="event.stopPropagation(); getArt(this.id, event)">
+                <img class="gallery__img shadow-lg" src="images/the-room-no-vi.jpeg" alt="191556">
+            </figure>
+                <br>
+            <figure class="gallery__item gallery__item--5" id="opo" onclick="event.stopPropagation(); getArt(this.id, event)">
+                <img class="gallery__img shadow-lg" src="images/veranda-post-opo-ogoga.jpeg" alt="102611">
+            </figure>
+                <br>
+            <figure class="gallery__item gallery__item--6" id="weaving" onclick="event.stopPropagation(); getArt(this.id, event)">
+                <img class="gallery__img shadow-lg" src="images/weaving.jpeg" alt="151363">
+            </figure>
+        </div>
+        <div id="apiResponse">
+        
+        </div>
+    </div>
+	<script>
+	// Declarations for the Artwork
+let art;
+let showArtInfo;
+let apiResponse;
+
+//  The Art Institute of Chicago request - No user login needed because it's 
+
+
+// Function to get Art Info when image figure is clicked
+/**
+ * @param art_index
+ * @param info_index
+ * 
+ * The function gets art information from The Art Institute of Chicago using 
+ the art_index of our gallery.
+ * Then finds the correct info_index inside of the JSON response data from 
+ The Art Institute
+ * of Chicago which will produce a description that will be shown when you 
+ click the art.
+ */
+
+async function clickedEvent(art_index, info_index) {
+    //  Get Art Id
+    let id = document.getElementsByTagName('img')[art_index].attributes[2].value;
+
+   let headers = new Headers([
+    ['Content-Type', 'application/json'],
+    ['Accept', 'application/json']
+]);
+
+let request = new Request(`https://api.artic.edu/api/v1/artworks/${id}? 
+    fields=id,title,artist_display,date_display,main_reference_number`, {
+    method: 'GET',
+    headers: headers
+});
+let result = await fetch(request);
+let apiResponse = await result.json();
+
+console.log(apiResponse)
+document.getElementById('apiResponse').innerHTML = JSON.stringify(apiResponse);
+
+if (showArtInfo){
+    stopShow();
+}
+}
+
+
+ /**
+  * @param id
+  * @param event
+  * 
+  * id = image id for gallery image
+  * event = Mouse event given by the action from our user
+  * 
+  * Function produces art information from the clickedEvent based 
+  * on index of image.
+  */
+
+ function getArt(id, event){
+        switch(id){
+    case 'blackmirror' : {
+        event.stopPropagation();
+        clickedEvent(0,0)
+        break;
+    }
+    case 'manymansions' : {
+        event.stopPropagation();
+        clickedEvent(1,0)
+        break;
+    }
+    case 'nightlife' : {
+        event.stopPropagation();
+        clickedEvent(2,0)
+        break;
+    }
+    case 'room' : {
+        event.stopPropagation();
+        clickedEvent(3,0)
+        break;
+    }
+    case 'opo' : {
+        event.stopPropagation();
+        clickedEvent(4,0)
+        break;
+    } 
+    case 'weaving' : {
+        event.stopPropagation();
+        clickedEvent(5,0)
+        break;
+    }
+  }
+ }
+	</script>
+	
+	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"></script>
+</body>
+</html>
